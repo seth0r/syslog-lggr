@@ -41,13 +41,13 @@ RUN chmod 0755 /usr/local/sbin/*.sh
 #    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy hello-cron file to the cron.d directory
-#COPY lggr-cron /etc/cron.d/lggr-cron
+COPY lggr-cron /etc/cron.d/lggr-cron
 
 # Give execution rights on the cron job
-#RUN chmod 0644 /etc/cron.d/lggr-cron
+RUN chmod 0644 /etc/cron.d/lggr-cron
 
 # Apply cron job
-#RUN crontab /etc/cron.d/lggr-cron
+RUN crontab /etc/cron.d/lggr-cron
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 CMD ["/usr/local/sbin/run.sh"]

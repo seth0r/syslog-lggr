@@ -1,0 +1,2 @@
+30 1 * * * . /tmp/docker.env; /usr/bin/php /var/www/logger/admin/cron.php > /proc/1/fd/1 2>/proc/1/fd/2
+*/5 * * * * . /tmp/docker.env; /usr/bin/php /var/www/logger/admin/cron_often.php > /proc/1/fd/1 2>/proc/1/fd/2
