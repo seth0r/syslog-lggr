@@ -29,7 +29,10 @@ RUN wget -qO- https://lggr.io/wp-content/uploads/2015/06/lggr_contrib.tar.gz | t
 
 COPY inc/*.php /var/www/logger/inc/
 COPY user.sql /var/www/logger/doc/user.sql
-RUN sed -i "s/'localhost'/\$_ENV[\"MYSQL_DB_HOST\"]/" /var/www/logger/inc/lggr_class.php
+RUN sed -i "s/'localhost'/getenv(\"MYSQL_DB_HOST\")/" /var/www/logger/inc/lggr_class.php
+
+COPY 08logger.conf /etc/syslog-ng/conf.d/08logger.conf.prep
+RUN sed -i 's!^#SYSLOGNG_OPTS!SYSLOGNG_OPTS!' /etc/default/syslog-ng
 
 COPY *.sh /usr/local/sbin/
 RUN chmod 0755 /usr/local/sbin/*.sh
