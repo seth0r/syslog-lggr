@@ -13,7 +13,10 @@ ENV TIMEZONE    Europe/Berlin
 
 RUN apt-get update 
 RUN apt-get dist-upgrade -y
-RUN apt-get -y install git wget gettext supervisor cron apache2 php7.3 php7.3-mysql syslog-ng libdbd-mysql
+RUN apt-get -y install git wget gettext mariadb-client supervisor cron apache2 php7.3 php7.3-mysql syslog-ng libdbd-mysql vim-nox
+
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN a2enmod headers expires
 RUN sed 's!^;date.timezone =$!date.timezone = \$TIMEZONE!' /etc/php/7.3/apache2/php.ini > /etc/php/7.3/apache2/php.ini.prep
@@ -36,9 +39,6 @@ RUN sed -i 's!^#SYSLOGNG_OPTS!SYSLOGNG_OPTS!' /etc/default/syslog-ng
 
 COPY *.sh /usr/local/sbin/
 RUN chmod 0755 /usr/local/sbin/*.sh
-
-#RUN apt-get clean && \
-#    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Copy hello-cron file to the cron.d directory
 COPY lggr-cron /etc/cron.d/lggr-cron
