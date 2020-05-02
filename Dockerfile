@@ -11,6 +11,9 @@ ENV MYSQL_DB_VIEW_USER      logviewer
 ENV MYSQL_DB_VIEW_PASS      viewerpass
 ENV TIMEZONE    Europe/Berlin
 
+EXPOSE 80/tcp
+EXPOSE 514/udp
+
 RUN apt-get update 
 RUN apt-get dist-upgrade -y
 RUN apt-get -y install git wget gettext mariadb-client supervisor cron apache2 php7.3 php7.3-mysql syslog-ng libdbd-mysql vim-nox
