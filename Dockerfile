@@ -31,7 +31,7 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY apache.conf /etc/apache2/sites-enabled/000-logger.conf
 
 RUN git clone https://git.kretschmann.software/kai/lggr.git /var/www/logger
-RUN wget -qO- https://lggr.io/wp-content/uploads/2015/06/lggr_contrib.tar.gz | tar -xvz -C /var/www/logger
+#RUN wget -qO- https://lggr.io/wp-content/uploads/2015/06/lggr_contrib.tar.gz | tar -xvz -C /var/www/logger
 
 COPY inc/*.php /var/www/logger/inc/
 COPY user.sql /var/www/logger/doc/user.sql
