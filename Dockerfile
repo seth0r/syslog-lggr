@@ -16,7 +16,7 @@ EXPOSE 514/udp
 
 RUN apt-get update 
 RUN apt-get dist-upgrade -y
-RUN apt-get -y install git wget gettext mariadb-client supervisor cron apache2 php7.3 php7.3-mysql syslog-ng libdbd-mysql vim-nox
+RUN apt-get -y install locales git wget gettext mariadb-client supervisor cron apache2 php7.3 php7.3-mysql syslog-ng libdbd-mysql vim-nox
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
