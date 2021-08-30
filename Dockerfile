@@ -16,7 +16,7 @@ EXPOSE 514/udp
 
 RUN apt-get update 
 RUN apt-get dist-upgrade -y
-RUN apt-get -y install git wget gettext mariadb-client supervisor cron apache2 php7.3 php7.3-mysql syslog-ng libdbd-mysql vim-nox
+RUN apt-get -y install locales git wget gettext mariadb-client supervisor cron apache2 php7.3 php7.3-mysql syslog-ng libdbd-mysql vim-nox
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -31,11 +31,13 @@ RUN rm /etc/apache2/sites-enabled/000-default.conf
 COPY apache.conf /etc/apache2/sites-enabled/000-logger.conf
 
 RUN git clone https://git.kretschmann.software/kai/lggr.git /var/www/logger
-RUN wget -qO- https://lggr.io/wp-content/uploads/2015/06/lggr_contrib.tar.gz | tar -xvz -C /var/www/logger
+#RUN wget -qO- https://lggr.io/wp-content/uploads/2015/06/lggr_contrib.tar.gz | tar -xvz -C /var/www/logger
 
 COPY inc/*.php /var/www/logger/inc/
 COPY user.sql /var/www/logger/doc/user.sql
 RUN sed -i "s/'localhost'/getenv(\"MYSQL_DB_HOST\")/" /var/www/logger/inc/lggr_class.php
+RUN sed -i 's!^Header!#Header!' /var/www/logger/.htaccess
+RUN chmod 0777 /var/www/logger/cache
 
 COPY 08logger.conf /etc/syslog-ng/conf.d/08logger.conf.prep
 RUN sed -i 's!^#SYSLOGNG_OPTS!SYSLOGNG_OPTS!' /etc/default/syslog-ng
